@@ -1,6 +1,7 @@
 <script>
   import Flatpickr from 'svelte-flatpickr'
   import 'flatpickr/dist/flatpickr.css'
+  import Papa from 'papaparse'
 
   let dateRange
   let files
@@ -9,13 +10,14 @@
     mode: "range"
   }
 
-  function handleClick() {
-    const reader = new FileReader()
-    reader.onload = ev => {
-      console.log('read', ev.target.result)
-    }
 
-    reader.readAsArrayBuffer(files[0])
+  function handleClick() {
+    Papa.parse(files[0], {
+      header: true,
+      step: (results, parser) => {
+        console.log(results);
+      },
+    });
   }
 </script>
 

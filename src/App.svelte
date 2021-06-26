@@ -1,16 +1,33 @@
 <script lang="ts">
-  import Form from './lib/Form.svelte'
+  import Form from "./lib/Form.svelte";
+
+  const cobotSubdomain =
+    window.cobot?.subdomain || import.meta.env.VITE_COBOT_SUBDOMAIN;
+  const cobotApiToken = window.cobot?.access_token || import.meta.env.VITE_COBOT_TOKEN;
+  const cobotApiBase = `https://${cobotSubdomain}.cobot.me/api`;
+
+  console.log(cobotApiBase);
+  
+
+  (async function() {
+    const response = await fetch(`${cobotApiBase}/memberships?attributes=id,email`, {
+      headers: {
+        Authorization: `Bearer ${cobotApiToken}`,
+      },
+    });
+    console.log(await response.json());
+  })();
+
 </script>
 
 <main>
-  <Form/>
-
+  <Form />
 </main>
 
 <style>
   :root {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
-      Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+      Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   }
 
   main {
