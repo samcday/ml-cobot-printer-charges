@@ -1,69 +1,45 @@
+<style lang="scss" global>
+  @import "bulma/sass/utilities/_all.sass";
+  @import "bulma/sass/elements/table.sass";
+</style>
+
 <script lang="ts">
-  import Form from "./lib/Form.svelte";
+  import Upload from "./lib/Upload.svelte";
+  import Table from "./lib/Table.svelte";
 
   const cobotSubdomain =
     window.cobot?.subdomain || import.meta.env.VITE_COBOT_SUBDOMAIN;
   const cobotApiToken = window.cobot?.access_token || import.meta.env.VITE_COBOT_TOKEN;
   const cobotApiBase = `https://${cobotSubdomain}.cobot.me/api`;
 
-  console.log(cobotApiBase);
-  
+  const foo = new Promise((resolve, reject) => {
+    setTimeout(resolve, 2000);
+  });
 
   (async function() {
-    const response = await fetch(`${cobotApiBase}/memberships?attributes=id,email`, {
-      headers: {
-        Authorization: `Bearer ${cobotApiToken}`,
-      },
-    });
-    console.log(await response.json());
+    // const response = await fetch(`${cobotApiBase}/memberships?attributes=id,email`, {
+    //   headers: {
+    //     Authorization: `Bearer ${cobotApiToken}`,
+    //   },
+    // });
+    // console.log(await response.json());
   })();
 
+  async function test() {
+    await foo;
+    console.log('yay?');
+  }
+
+  let data = [];
+
+  function handleRow(event: CustomEvent) {
+    data = [...data, event.detail];
+  }
 </script>
 
-<main>
-  <Form />
+<main>  
+  <Upload on:row={handleRow} />
+
+  <Table bind:data />
+
 </main>
-
-<style>
-  :root {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-      Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-  }
-
-  main {
-    text-align: center;
-    padding: 1em;
-    margin: 0 auto;
-  }
-
-  img {
-    height: 16rem;
-    width: 16rem;
-  }
-
-  h1 {
-    color: #ff3e00;
-    text-transform: uppercase;
-    font-size: 4rem;
-    font-weight: 100;
-    line-height: 1.1;
-    margin: 2rem auto;
-    max-width: 14rem;
-  }
-
-  p {
-    max-width: 14rem;
-    margin: 1rem auto;
-    line-height: 1.35;
-  }
-
-  @media (min-width: 480px) {
-    h1 {
-      max-width: none;
-    }
-
-    p {
-      max-width: none;
-    }
-  }
-</style>
