@@ -1,7 +1,11 @@
 <script lang="ts">
-import { each } from "svelte/internal";
+  import { each } from "svelte/internal";
 
   export let data = [];
+
+  function process() {
+    alert('hi');
+  }
 </script>
 
 <section class="container">
@@ -27,4 +31,6 @@ import { each } from "svelte/internal";
       {/each}
     </tbody>
   </table>
+
+  <button on:click={process}>Generate Charges</button>
 </section>

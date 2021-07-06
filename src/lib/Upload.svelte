@@ -21,8 +21,13 @@
           return;
         }
 
+        const date = Date.parse(data['Finish time']);
+        if (!date) {
+          return;
+        }
+
         dispatch('row', {
-          date: Date.parse(data['Finish time']),
+          date: date,
           job: data['Print name'],
           email: data['User Email'],
           material: data.Material,

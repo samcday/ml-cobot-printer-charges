@@ -5,16 +5,12 @@
 
 <script lang="ts">
   import Upload from "./lib/Upload.svelte";
-  import Table from "./lib/Table.svelte";
+  import Preview from "./lib/Preview.svelte";
 
   const cobotSubdomain =
     window.cobot?.subdomain || import.meta.env.VITE_COBOT_SUBDOMAIN;
   const cobotApiToken = window.cobot?.access_token || import.meta.env.VITE_COBOT_TOKEN;
   const cobotApiBase = `https://${cobotSubdomain}.cobot.me/api`;
-
-  const foo = new Promise((resolve, reject) => {
-    setTimeout(resolve, 2000);
-  });
 
   (async function() {
     // const response = await fetch(`${cobotApiBase}/memberships?attributes=id,email`, {
@@ -24,11 +20,6 @@
     // });
     // console.log(await response.json());
   })();
-
-  async function test() {
-    await foo;
-    console.log('yay?');
-  }
 
   let data = [];
 
@@ -40,6 +31,6 @@
 <main>  
   <Upload on:row={handleRow} />
 
-  <Table bind:data />
+  <Preview bind:data />
 
 </main>
