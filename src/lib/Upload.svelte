@@ -1,7 +1,7 @@
 <script>
   import Papa from "papaparse";
   import { createEventDispatcher } from "svelte";
-  import members from "./members";
+  import {members, serviceCharges} from "./cobot_api";
 
   const dispatch = createEventDispatcher();
 
@@ -12,7 +12,7 @@
   };
 
   async function handleClick() {
-    const memberList = await members();
+    const [memberList, chargeList] = await Promise.all([members(), serviceCharges()]);
 
     Papa.parse(files[0], {
       header: true,
@@ -34,11 +34,18 @@
         }
         const member = memberList.get(email);
 
+        const material = data.Material;
+        if (!chargeList.has(material)) {
+          return;
+        }
+        const charge = chargeList.get(material);
+
         dispatch('row', {
           date: date,
           job: data['Print name'],
           member: member,
           material: data.Material,
+          charge: charge,
           amount: data['Volume (ml)'],
         });
       },

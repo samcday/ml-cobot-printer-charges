@@ -15,3 +15,25 @@ export async function api(uri: string): Promise<any> {
 
   return await response.json();
 }
+
+export async function members(): Promise<Map<string, any>> {
+  const list = await api('/memberships?attributes=id,name,email');
+  const members = new Map;
+
+  for (const member of list) {
+    members.set(member.email, member);
+  }
+
+  return members;
+}
+
+export async function serviceCharges(): Promise<Map<string, any>> {
+  const list = await api('/service_charges');
+  const charges = new Map;
+
+  for (const item of list) {
+    charges.set(item.name, item);
+  }
+
+  return charges;
+}

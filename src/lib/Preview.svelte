@@ -1,7 +1,4 @@
 <script lang="ts">
-  import { each } from "svelte/internal";
-import members from "./members";
-
   export let data = [];
 
   function process() {
@@ -18,6 +15,7 @@ import members from "./members";
         <th>Member</th>
         <th>Material</th>
         <th>Amount (mL/mm)</th>
+        <th>Cost</th>
       </tr>
     </thead>
     <tbody>
@@ -28,6 +26,7 @@ import members from "./members";
           <td><a target='_blank' href='https://samtest.cobot.me/admin/memberships/{row.member.id}'>{row.member.name}</a></td>
           <td>{row.material}</td>
           <td>{row.amount}</td>
+          <td>{row.charge.price * row.amount} {row.charge.currency}</td>
         </tr>
       {/each}
     </tbody>

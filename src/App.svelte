@@ -6,11 +6,6 @@
 <script lang='ts'>
   import Upload from './lib/Upload.svelte';
   import Preview from './lib/Preview.svelte';
-  import members from './lib/members';
-
-  // (async function() {
-  //   await members();
-  // })();
 
   let data = [];
 
