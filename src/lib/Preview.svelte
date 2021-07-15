@@ -1,5 +1,6 @@
 <script lang="ts">
   import { each } from "svelte/internal";
+import members from "./members";
 
   export let data = [];
 
@@ -24,7 +25,7 @@
         <tr>
           <td><abbr title={row.date}>{row.date}</abbr></td>
           <td>{row.job}</td>
-          <td>{row.email}</td>
+          <td><a target='_blank' href='https://samtest.cobot.me/admin/memberships/{row.member.id}'>{row.member.name}</a></td>
           <td>{row.material}</td>
           <td>{row.amount}</td>
         </tr>

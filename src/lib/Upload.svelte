@@ -1,17 +1,19 @@
 <script>
   import Papa from "papaparse";
   import { createEventDispatcher } from "svelte";
+  import members from "./members";
 
   const dispatch = createEventDispatcher();
 
-  let dateRange;
   let files;
 
   const options = {
     mode: "range",
   };
 
-  function handleClick() {
+  async function handleClick() {
+    const memberList = await members();
+
     Papa.parse(files[0], {
       header: true,
       worker: true,
@@ -26,10 +28,16 @@
           return;
         }
 
+        const email = data['User Email'];
+        if (!memberList.has(email)) {
+          return;
+        }
+        const member = memberList.get(email);
+
         dispatch('row', {
           date: date,
           job: data['Print name'],
-          email: data['User Email'],
+          member: member,
           material: data.Material,
           amount: data['Volume (ml)'],
         });
